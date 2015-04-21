@@ -6,8 +6,10 @@ var pin = 24;
 var time = 500;
 
 function gpioClose(gpio) {
+  console.log('sigint close');
   gpio.value(0);
   gpio.close();
+  process.exit();
 }
 
 function _loop(gpio, val) {
@@ -17,15 +19,13 @@ function _loop(gpio, val) {
   setTimeout(_loop, 500, gpio, sig);
 }
 
+console.log('start');
+
 _gpio.open(pin, 'out')
   .then(function(gpio) {
-    process.on('SIGINT', gpioClose(gpio))
-      .then(function() {
-        process.exit();
-      });
+    process.on('SIGINT', gpioClose.bind(this, gpio));
     _loop(gpio, 1);
   })
   .catch(function(err) {
-    console.log(err);
+    console.log(err.stack);
   });
-
