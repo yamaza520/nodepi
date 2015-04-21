@@ -11,10 +11,9 @@ function gpioClose(gpio) {
 }
 
 function _loop(gpio, val) {
-  console.log('loop v=' + val);
   gpio.value(val);
-  var sig = 1;
-  if (val == 1) sig = 0;
+  var sig = (val == 1) ? 0 : 1;
+  console.log('loop, v=' + val + ', s=' + sig);
   setTimeout(_loop, 500, gpio, sig);
 }
 
@@ -26,9 +25,7 @@ _gpio.open(pin, 'out')
       });
     _loop(gpio, 1);
   })
-  .catch(
-    function(err) {
-      console.log(err);
-    }
-  );
+  .catch(function(err) {
+    console.log(err);
+  });
 
