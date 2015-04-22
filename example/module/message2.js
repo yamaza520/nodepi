@@ -1,6 +1,6 @@
 'use strict';
 
-var Message2 = function() {
+module.exports = function() {
   var privates = {
     _message : 'mes',
 
@@ -19,5 +19,3 @@ var Message2 = function() {
     privates.out();
   };
 };
-
-module.exports = Message2;

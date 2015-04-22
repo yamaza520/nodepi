@@ -22,7 +22,7 @@
 // hello.change("atm").say();
 
 
-var Message = function() {
+module.exports = function() {
   var privates = {
     _message : 'mes',
 
@@ -41,5 +41,3 @@ var Message = function() {
     privates.out();
   };
 };
-
-module.exports = Message;
