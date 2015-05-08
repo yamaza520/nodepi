@@ -1,12 +1,20 @@
 'use strict';
 
-// var gpiopi = require('node-pi-gpio');
-var pin = 24;
+var gpiopi = require('node-pi-gpio');
+var pin1 = 24;
+var pin2 = 14;
 var time = 500;
 
 module.exports = function() {
 	var gpio = {
-		out : null
+		pin1 : {
+			id : pin1,
+			out : null
+		},
+		pin2 : {
+			id : pin2,
+			out : null
+		},
 	};
 	var timer = {
 		loop : null
@@ -35,8 +43,10 @@ module.exports = function() {
 		 * @param val
 		 */
 		rightChange : function(val) {
+			var val2 = (val == 1) ? 0 : 1;
 			console.log('v=' + val);
-			// gpio.out.value(val);
+			gpio.pin1.out.value(val);
+			gpio.pin2.out.value(val2);
 		},
 
 		/**
@@ -44,15 +54,15 @@ module.exports = function() {
 		 */
 		openGpio : function() {
 			return new Promise(function(resolve, reject) {
-			// 	gpiopi.open(pin, 'out')
-			// 		.then(function(gpio) {
-			// 			gpio.out = gpio;
-			// 			console.log('open pin=' + pin);
+				Promise.all(gpiopi.open(gpio.pin1.id, 'out'), gpiopi.open(gpio.pin2.id, 'out'))
+					.then(function(gpio1, gpio2) {
+						gpio.pin1.out = gpio1;
+						gpio.pin2.out = gpio2;
 						resolve();
-			// 		})
-			// 		.catch(function(err) {
-			// 			reject(err);
-			// 		});
+					})
+					.catch(function(err) {
+						reject(err);
+					});
 			});
 		}
 	};
