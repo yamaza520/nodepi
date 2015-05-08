@@ -2,7 +2,7 @@
 
 var gpiopi = require('node-pi-gpio');
 var pin1 = 24;
-var pin2 = 14;
+var pin2 = 20;
 var time = 500;
 
 module.exports = function() {
@@ -54,10 +54,12 @@ module.exports = function() {
 		 */
 		openGpio : function() {
 			return new Promise(function(resolve, reject) {
-				Promise.all(gpiopi.open(gpio.pin1.id, 'out'), gpiopi.open(gpio.pin2.id, 'out'))
-					.then(function(gpio1, gpio2) {
-						gpio.pin1.out = gpio1;
-						gpio.pin2.out = gpio2;
+				Promise.all(
+						[gpiopi.open(gpio.pin1.id, 'out'), gpiopi.open(gpio.pin2.id, 'out')]
+					)
+					.then(function(res) {
+						gpio.pin1.out = res[0];
+						gpio.pin2.out = res[1];
 						resolve();
 					})
 					.catch(function(err) {
