@@ -19,17 +19,17 @@ client.on('data', function(data) {
 	var dataString = data.toString();
 	datas += dataString;
 	if (dataString.trim().slice(-1) === '.') {
+		// console.log(datas);
+		var tmp = datas;
+		datas = '';
 		// julius parse
-		juliusParse.parseJulius(datas)
+		juliusParse.parseJulius(tmp)
 				.then(function(w) {
 					// do exec
 					execution.doRight(w);
 				})
 				.catch(function(err) {
 					console.log('err,' + err);
-				})
-				.then(function() {
-					datas = '';
 				});
 	}
 });

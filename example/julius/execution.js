@@ -1,6 +1,6 @@
 'use strict';
 
-var gpiopi = require('node-pi-gpio');
+// var gpiopi = require('node-pi-gpio');
 var pin = 24;
 var time = 500;
 
@@ -36,7 +36,7 @@ module.exports = function() {
 		 */
 		rightChange : function(val) {
 			console.log('v=' + val);
-			gpio.out.value(val);
+			// gpio.out.value(val);
 		},
 
 		/**
@@ -44,15 +44,15 @@ module.exports = function() {
 		 */
 		openGpio : function() {
 			return new Promise(function(resolve, reject) {
-				gpiopi.open(pin, 'out')
-					.then(function(gpio) {
-						gpio.out = gpio;
-						console.log('open pin=' + pin);
+			// 	gpiopi.open(pin, 'out')
+			// 		.then(function(gpio) {
+			// 			gpio.out = gpio;
+			// 			console.log('open pin=' + pin);
 						resolve();
-					})
-					.catch(function(err) {
-						reject(err);
-					});
+			// 		})
+			// 		.catch(function(err) {
+			// 			reject(err);
+			// 		});
 			});
 		}
 	};
@@ -66,6 +66,7 @@ module.exports = function() {
 				privates.doRightOff();
 				break;
 			case 'ん' :
+				clearTimeout(timer.loop);
 				privates.openGpio()
 					.then(privates.doLoop(0));
 				break;

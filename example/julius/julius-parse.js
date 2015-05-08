@@ -21,6 +21,7 @@ module.exports = function() {
 					xml += l;
 				}
 			});
+			// console.log(xml);
 			return xml;
 		},
 
