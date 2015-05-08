@@ -5,6 +5,7 @@ var grammar = new Grammar;
 
 grammar.add('おはようございます');
 grammar.add('あ');
+grammar.add('い');
 grammar.add('ん');
 
 grammar.compile(function(err, result) {
